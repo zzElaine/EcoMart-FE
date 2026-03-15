@@ -1,4 +1,4 @@
-import './assets/main.css'
+//import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -8,12 +8,12 @@ import router from './router'
 //引入初始化样式文件
 import './styles/common.scss'
 
-//测试接口函数
-import{getCategory} from '@/apis/testAPI'
-//测试接口调用
-getCategory().then(res => {
-  console.log(res)
-})
+// //测试接口函数
+// import{getCategory} from '@/apis/testAPI'
+// //测试接口调用
+// getCategory().then(res => {
+//   console.log(res)
+// })
 
 const app = createApp(App)
 
