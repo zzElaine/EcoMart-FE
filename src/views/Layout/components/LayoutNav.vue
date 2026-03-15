@@ -32,6 +32,7 @@
 <style scoped lang="scss">
 .app-topnav {
   background: #333;
+  height: auto;
   ul {
     display: flex;
     height: 53px;

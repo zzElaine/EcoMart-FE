@@ -2,8 +2,7 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "forceConsistentCasingInFileNames": false
+    }
   },
   "exclude": ["node_modules", "dist"]
 }
