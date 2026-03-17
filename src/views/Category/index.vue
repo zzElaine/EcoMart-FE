@@ -4,12 +4,26 @@ import { onMounted , ref} from 'vue'
 import { useRoute } from 'vue-router'
 import { getBannerAPI } from '@/apis/home'
 import GoodsItem from '../Home/components/GoodsItem.vue'
-const  categoryData = ref({})
-const route = useRoute()//获取路由参数
-const getCategory = async () => {
-  const res = await getCategoryAPI(route.params.id)
-  categoryData.value = res.result
-}
+import { onBeforeRouteUpdate } from 'vue-router'
+
+
+  // 获取分类数据
+  const categoryData = ref({})
+  const route = useRoute()
+  //默认id为原来路由参数id
+  const getCategory = async (id = route.params.id) => {
+    const res = await getCategoryAPI(id)
+    categoryData.value = res.result
+  }
+  onMounted(() => getCategory())
+
+  // 目标:路由参数变化的时候 可以把分类数据接口重新发送
+  onBeforeRouteUpdate((to) => {
+    // 存在问题：使用最新的路由参数请求最新的分类数据
+    console.log('to', to);
+    getCategory(to.params.id)
+  })
+
 
 const bannerList = ref([]);
 async function getBanner() {
@@ -22,10 +36,10 @@ async function getBanner() {
   bannerList.value = res.result;
 }
 onMounted(() => {
-  getCategory()
   getBanner();
 });
 
+ 
 // 分类商品页轮播图
 </script>
 <template>
