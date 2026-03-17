@@ -1,10 +1,17 @@
 import httpInstance from "@/utils/http";
 //获取轮播图 homebanner
-export function getBannerAPI() {
+export const getBannerAPI = (params = {}) => {
+  //广告区域展示位置（投放位置 投放位置，
+  // 1为首页，2为分类商品页） 默认是1
+  const { distributionSite = '1' } = params
   return httpInstance({
-    url: '/home/banner'
-  });
+    url: '/home/banner',
+    params: {
+      distributionSite
+    }
+  })
 }
+
 //homenew接口
 /**
  * @description: 获取新鲜好物
@@ -40,3 +47,4 @@ export const getGoodsAPI = () => {
     url: '/home/goods'
   })
 }
+
