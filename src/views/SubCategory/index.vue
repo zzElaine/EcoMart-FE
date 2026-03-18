@@ -1,19 +1,16 @@
 <script setup>
 import { getCategoryFilterAPI, getSubCategoryAPI} from '@/apis/category'
 import { onMounted, ref } from 'vue'
-import GoodsItem from '../Home/components/GoodsItem.vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const id = route.params.id
-const categoryData = ref({})
-const getCategory = async () => {
-  const res = await getCategoryFilterAPI(id)
-  categoryData.value = res.result
+// 获取面包屑导航数据
+const filterData = ref({})
+const getFilterData = async () => {
+  const res = await getCategoryFilterAPI(route.params.id)
+  filterData.value = res.result
 }
-onMounted(() => {
-  getCategory()
-})
+getFilterData()
 // 获取基础列表数据渲染
 const goodList = ref([])
 const reqData = ref({
@@ -52,32 +49,15 @@ const load = async () => {
 </script>
 
 <template>
-  <div class="container ">
-    <!-- 面包屑 -->
-    <div class="bread-container">
-      <el-breadcrumb separator=">">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/' }">{{ categoryData.parentName }}
-        </el-breadcrumb-item>
-        <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
-      </el-breadcrumb>
-    </div>r
-    <div class="sub-container"  v-infinite-scroll="load"  :infinite-scroll-disabled="disabled">
-      <el-tabs v-model="reqData.sortField" @tab-click="tabChange">
-        <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
-        <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
-        <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
-      </el-tabs>
-      <div class="body" >
-         <!-- 商品列表-->
-          <GoodsItem v-for="good in goodList" :goods="good" :key="good.id" />
-      </div>
-    </div>
+  <div class="bread-container">
+    <el-breadcrumb separator=">">
+      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: `/category/${filterData.parentId}` }">{{ filterData.parentName }}
+      </el-breadcrumb-item>
+      <el-breadcrumb-item>{{ filterData.name }}</el-breadcrumb-item>
+    </el-breadcrumb>
   </div>
-
 </template>
-
-
 
 <style lang="scss" scoped>
 .bread-container {
