@@ -7,6 +7,8 @@ import Layout from '@/views/Layout/index.vue'
 import home from '@/views/Home/index.vue' 
 import category from '@/views/Category/index.vue'
 import SubCategory from '@/views/SubCategory/index.vue'
+import Detail from '@/views/Detail/index.vue'
+
 
 
 const router = createRouter({
@@ -31,10 +33,20 @@ const router = createRouter({
         {
           path: '/category/sub/:id',
           component: SubCategory
+        },
+        {
+          path: 'detail/:id',
+          component: Detail
         }
       ]
     }
-  ]
+  ],
+  //路由滚动行为定制
+  scrollBehavior() {//切换路由后，滚动到顶部
+    return {
+      top: 0
+    }
+  }
 })
 
 export default router
