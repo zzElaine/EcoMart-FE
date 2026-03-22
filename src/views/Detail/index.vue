@@ -4,6 +4,7 @@ import { getDetailAPI } from '@/apis/detail'
 import { useRoute } from 'vue-router'
 import DetailHot from './Components/DetailHot.vue'
 import ImageView from '@/components/ImageView/index.vue'
+import XtxSku from '@/components/XtxSku/index.vue'
 const goods = ref({})
 const route = useRoute()
 const getGoods = async () => { 
@@ -92,6 +93,7 @@ onMounted(() => {
                 </dl>
               </div>
               <!-- sku组件 -->
+              <XtxSku :goods = "goods" /> 
 
               <!-- 数据组件 -->
 
