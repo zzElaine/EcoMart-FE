@@ -22,12 +22,33 @@ const rules ={
         if(!value){
           callback( new Error('请同意隐私条款和服务条款'))
         }else{
+          //什么都不传或传undefined 表示校验通过
           callback()
         }  
       }
     }
   ]
 }
+//3.获取form实例做统一校验
+const formRef = ref(null)
+const doLogin = () => { 
+  //formRef.value 获取表单组件实例
+  //.validate() 是 Element Plus 表单提供的方法，触发整个表单的验证
+  formRef.value.validate((valid) => { 
+    //调用实例方法
+    console.log(valid)
+    //以valid作为判断条件 如果通过校验才执行登录逻辑
+    if(valid){
+      //TODO LOGIN
+    }
+  })
+}
+
+//1.用户名和密码 只需要通过简单的配置
+//2.同意隐私条款和服务条款 需要自定义校验规则validator:(rule, value, callback)=>{}
+//3.登录按钮点击事件 触发统一校验逻辑
+
+
 </script>
 
 
@@ -52,7 +73,7 @@ const rules ={
         </nav>
         <div class="account-box">
           <div class="form">
-            <el-form :model="form" :rules="rules" label-position="right" label-width="60px"
+            <el-form ref="formRef" :model="form" :rules="rules" label-position="right" label-width="60px"
               status-icon>
               <el-form-item  prop="account" label="账户">
                 <el-input v-model="form.account" placeholder="请输入账户"/>
@@ -66,7 +87,7 @@ const rules ={
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
-              <el-button size="large" class="subBtn">点击登录</el-button>
+              <el-button size="large" class="subBtn" @click="doLogin()">点击登录</el-button>
             </el-form>
           </div>
         </div>
