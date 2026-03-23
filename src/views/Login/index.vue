@@ -14,6 +14,18 @@ const rules ={
   password: [
     { required: true, message: '密码不为空', trigger: 'blur' },
     { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }
+  ],
+  agree: [
+    { 
+      validator:(rule, value, callback)=>{
+        console.log('触发了', value)
+        if(!value){
+          callback( new Error('请同意隐私条款和服务条款'))
+        }else{
+          callback()
+        }  
+      }
+    }
   ]
 }
 </script>
@@ -49,8 +61,8 @@ const rules ={
               <el-form-item prop="password" label="密码">
                 <el-input v-model="form.password" placeholder="请输入密码"/>
               </el-form-item>
-              <el-form-item label-width="22px">
-                <el-checkbox  size="large">
+              <el-form-item prop="agree" label-width="22px">
+                <el-checkbox v-model="form.agree" size="large">
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
