@@ -1,5 +1,21 @@
 <script setup>
-
+import { ref } from 'vue'
+//1.准备表单对象
+const form = ref({
+  account: '',
+  password: ''
+})
+//2.准备规则对象
+const rules ={
+  account: [
+    { required: true, message: '账号不为空', trigger: 'blur' },
+    { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+  ],
+  password: [
+    { required: true, message: '密码不为空', trigger: 'blur' },
+    { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }
+  ]
+}
 </script>
 
 
@@ -24,13 +40,14 @@
         </nav>
         <div class="account-box">
           <div class="form">
-            <el-form label-position="right" label-width="60px"
+            <el-form :model="form" :rules="rules" label-position="right" label-width="60px"
               status-icon>
-              <el-form-item  label="账户">
-                <el-input/>
+              <el-form-item  prop="account" label="账户">
+                <el-input v-model="form.account" placeholder="请输入账户"/>
               </el-form-item>
-              <el-form-item label="密码">
-                <el-input/>
+              <!-- prop： Element Plus 表单组件特定的属性 通过 prop 属性找到对应的规则 -->
+              <el-form-item prop="password" label="密码">
+                <el-input v-model="form.password" placeholder="请输入密码"/>
               </el-form-item>
               <el-form-item label-width="22px">
                 <el-checkbox  size="large">
