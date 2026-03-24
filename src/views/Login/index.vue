@@ -1,15 +1,20 @@
 <script setup>
 import { ref } from 'vue'
+import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user'
 //1.准备表单对象
 const form = ref({
-  account: '',
-  password: ''
+  account: 'xiaotuxian001',
+  password: '123456',
+  agree:true
 })
 //2.准备规则对象
 const rules ={
   account: [
     { required: true, message: '账号不为空', trigger: 'blur' },
-    { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+    { min: 3, max: 16, message: '长度在 3 到 16 个字符', trigger: 'blur' }
   ],
   password: [
     { required: true, message: '密码不为空', trigger: 'blur' },
@@ -31,15 +36,23 @@ const rules ={
 }
 //3.获取form实例做统一校验
 const formRef = ref(null)
+const router = useRouter()
+const userStore = useUserStore()
 const doLogin = () => { 
+  const {account,password}=form.value
   //formRef.value 获取表单组件实例
   //.validate() 是 Element Plus 表单提供的方法，触发整个表单的验证
-  formRef.value.validate((valid) => { 
+  formRef.value.validate(async(valid) => { 
     //调用实例方法
     console.log(valid)
     //以valid作为判断条件 如果通过校验才执行登录逻辑
     if(valid){
       //TODO LOGIN
+      userStore.getUserInfo({account,password})
+      // 1. 提示用户
+      ElMessage({ type: 'success', message: '登录成功' })
+      // 2. 跳转首页
+      router.replace({ path: '/' })
     }
   })
 }
