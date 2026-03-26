@@ -2,20 +2,53 @@
 import { ref, onMounted } from 'vue'
 import { getDetailAPI } from '@/apis/detail'
 import { useRoute } from 'vue-router'
+import { ElMessage } from 'element-plus'
 import DetailHot from './Components/DetailHot.vue'
-// import ImageView from '@/components/ImageView/index.vue'
-// import XtxSku from '@/components/XtxSku/index.vue'
+import ImageView from '@/components/ImageView/index.vue'
+import XtxSku from '@/components/XtxSku/index.vue'
+import { useCartStore } from '@/stores/cartStore.js'
+const cartStore = useCartStore()
 const goods = ref({})
 const route = useRoute()
-const getGoods = async () => { 
+const getGoods = async () => {
   const res = await getDetailAPI(route.params.id)
-  goods.value = res.result  
+  goods.value = res.result
 }
-onMounted(() => {
-  getGoods()
-})
+onMounted(() => getGoods())
 
+// sku规格被操作时
+let skuObj = {}
+const skuChange = (sku) => {
+  console.log(sku)
+  skuObj = sku
+}
 
+// count
+const count = ref(1)
+const countChange = (count) => {
+  console.log(count)
+}
+
+// 添加购物车
+const addCart = () => {
+  if (skuObj.skuId) {
+    console.log(skuObj, cartStore.addCart)
+    // 规则已经选择  触发action
+    cartStore.addCart({
+      id: goods.value.id,
+      name: goods.value.name,
+      picture: goods.value.mainPictures[0],
+      price: goods.value.price,
+      count: count.value,
+      skuId: skuObj.skuId,
+      attrsText: skuObj.specsText,
+      selected: true
+    })
+  } else {
+    // 规格没有选择 提示用户
+    ElMessage.warning('请选择规格')
+  }
+}
 
 </script>
 
@@ -93,13 +126,13 @@ onMounted(() => {
                 </dl>
               </div>
               <!-- sku组件 -->
-              <XtxSku :goods = "goods" /> 
+              <XtxSku :goods = "goods" @change="skuChange"/> 
 
               <!-- 数据组件 -->
-
+              <el-input-number v-model="count" :min="1" @change="countChange" />
               <!-- 按钮组件 -->
               <div>
-                <el-button size="large" class="btn">
+                <el-button size="large" class="btn" @click="addCart">
                   加入购物车
                 </el-button>
               </div>

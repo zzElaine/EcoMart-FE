@@ -34,10 +34,14 @@ const top = ref(0)
 const positionX=ref(0)  
 const positionY=ref(0)
 //鼠标在里面才监听
-   watch([elementX, elementY],()=>{
-    console.log('xy变化了')
-     if (isOutside.value) return
-      console.log('后续逻辑执行了')
+  watch([elementX, elementY, isOutside], () => {
+  //console.log('xy变化了', 'isOutside:', isOutside.value)
+  if (isOutside.value) {
+    //console.log('鼠标在外面，return了')
+    return
+  }
+  //   console.log('鼠标在里面，执行后续逻辑')
+  
     //有效范围内控制滑块距离
     //横向
     if(elementX.value > 100 && elementX.value < 300){
