@@ -2,6 +2,7 @@
 
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { computed } from 'vue'
 
 
 export const useCartStore = defineStore('cart', () => {
@@ -24,8 +25,7 @@ export const useCartStore = defineStore('cart', () => {
       cartList.value.push(goods)
     }
   }
-  //删除
-    // 删除购物车
+  // 删除购物车
   const delCart = async (skuId) => {
       // 思路：
       // 1. 找到要删除项的下标值 - splice
@@ -33,10 +33,21 @@ export const useCartStore = defineStore('cart', () => {
       const idx = cartList.value.findIndex((item) => skuId === item.skuId)
       cartList.value.splice(idx, 1)//1表示删除1个元素
   }
+
+  //计算属性
+  //1. 总数量
+  const totalCount = computed(() => //reduce方法累加所有商品的数量count属性
+    cartList.value.reduce((pre, cur) => pre + cur.count, 0))
+  //2. 总价格
+  const totalPrice = computed(() => 
+    cartList.value.reduce((pre, cur) => pre + cur.price * cur.count, 0))
+
   return {
     cartList,
     addCart,
-    delCart
+    delCart, 
+    totalCount, 
+    totalPrice
   }
 }, {
   persist: true,
