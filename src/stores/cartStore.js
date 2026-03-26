@@ -33,6 +33,13 @@ export const useCartStore = defineStore('cart', () => {
       const idx = cartList.value.findIndex((item) => skuId === item.skuId)
       cartList.value.splice(idx, 1)//1表示删除1个元素
   }
+  //单选功能
+  const singleChecked = (skuId,selected) => {
+    const item = cartList.value.find((item)=>item.skuId === skuId)
+    item.selected = selected
+    //store cartList数组 无法知道要修改谁的选中状态
+    // 除了selected补充一个用来筛选的参数 skuId
+  }
 
   //计算属性
   //1. 总数量
@@ -47,7 +54,8 @@ export const useCartStore = defineStore('cart', () => {
     addCart,
     delCart, 
     totalCount, 
-    totalPrice
+    totalPrice,
+    singleChecked
   }
 }, {
   persist: true,
