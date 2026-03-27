@@ -9,6 +9,11 @@ const singleChecked = (i,selected) => {
   cartStore.singleChecked(i.skuId,selected)
 }
 
+const allCheck = (selected) =>{
+  cartStore.allCheck(selected)
+
+}
+
 </script>
 
 <template>
@@ -19,7 +24,7 @@ const singleChecked = (i,selected) => {
           <thead>
             <tr>
               <th width="120">
-                <el-checkbox/>
+                <el-checkbox :model-value="cartStore.isAll" @change="cartStore.allCheck"/>
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>
