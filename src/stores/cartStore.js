@@ -20,11 +20,9 @@ export const useCartStore = defineStore('cart', () => {
       //登陆后的购物车逻辑
       await insertCartAPI({skuId,count})
       //加入购物车后，获取最新的购物车列表
-      console.log('调用获取购物车列表接口 cart')
+      console.log('调用获取购物车列表接口cart')
       const res = await findNewCartListAPI()
-      console.log('购物车 API 返回数据:', res)
-      // 确保 cartList 是数组
-      cartList.value = Array.isArray(res?.data) ? res.data : []
+      cartList.value = res.result
     }
     else{
       // 添加购物车操作
