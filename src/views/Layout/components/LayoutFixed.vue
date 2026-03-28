@@ -1,24 +1,29 @@
 <script setup>
-import { useScroll } from '@vueuse/core'
+import { useScroll } from "@vueuse/core";
 
-const { y } = useScroll(window)
+const { y } = useScroll(window);
 // 监听滚动位置，当滚动位置大于 100 时，显示吸顶导航
 
 //使用pinia中的数据
-import { useCategoryStore } from '@/stores/category';
+import { useCategoryStore } from "@/stores/categoryStore";
 //执行得到store实例对象
-const categoryStore = useCategoryStore()
-
+const categoryStore = useCategoryStore();
 </script>
 
 <template>
-  <div class="app-header-sticky " :class="{ show: y > 100 }">
+  <div class="app-header-sticky" :class="{ show: y > 100 }">
     <div class="container">
       <RouterLink class="logo" to="/" />
       <!-- 导航区域 -->
-      <ul class="app-header-nav ">
-        <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
-          <RouterLink active-class="active" :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
+      <ul class="app-header-nav">
+        <li
+          class="home"
+          v-for="item in categoryStore.categoryList"
+          :key="item.id"
+        >
+          <RouterLink active-class="active" :to="`/category/${item.id}`">{{
+            item.name
+          }}</RouterLink>
         </li>
       </ul>
 
@@ -30,8 +35,7 @@ const categoryStore = useCategoryStore()
   </div>
 </template>
 
-
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .app-header-sticky {
   width: 100%;
   height: 80px;
