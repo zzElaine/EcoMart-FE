@@ -15,7 +15,19 @@ const getCheckInfo = async () => {
 onMounted(() => {
   getCheckInfo()
 })
+//控制弹窗打开
 const showDialog = ref(false) // 切换地址弹窗显示状态
+//切换地址
+const activeAddress = ref({}) // 选中的地址对象
+const switchAddress = (item) => {
+  activeAddress.value = item
+}
+
+const submitAddress = () => {
+  curAddress.value = activeAddress.value
+  showDialog.value = false
+  activeAddress.value = {}
+}
 
 </script>
 
@@ -117,9 +129,11 @@ const showDialog = ref(false) // 切换地址弹窗显示状态
     </div>
   </div>
   <!-- 切换地址 -->
+    <!-- el-dialog 组件默认开启了 点击遮罩层关闭 的功能。当你点击弹窗外部（遮罩层）时， -->
+    <!-- 组件内部会自动将 v-model 绑定的值（即 showDialog）设置为 false。 -->
    <el-dialog v-model="showDialog" title="切换收货地址" width="30%" center>
   <div class="addressWrapper">
-    <div class="text item" v-for="item in checkInfo.userAddresses"  :key="item.id">
+    <div class="text item" :class="{'active': item.id===activeAddress.id}" @click="switchAddress(item)" v-for="item in checkInfo.userAddresses"  :key="item.id">
       <ul>
       <li><span>收<i />货<i />人：</span>{{ item.receiver }} </li>
       <li><span>联系方式：</span>{{ item.contact }}</li>
@@ -129,8 +143,8 @@ const showDialog = ref(false) // 切换地址弹窗显示状态
   </div>
   <template #footer>
     <span class="dialog-footer">
-      <el-button>取消</el-button>
-      <el-button type="primary">确定</el-button>
+      <el-button @click="showDialog = false">取消</el-button>
+      <el-button type="primary" @click="submitAddress"  >确定</el-button>
     </span>
   </template>
 </el-dialog>
