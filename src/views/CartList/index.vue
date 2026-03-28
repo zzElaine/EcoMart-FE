@@ -1,17 +1,45 @@
 <script setup>
 import { useCartStore } from '@/stores/cartStore'
+import { useRouter } from 'vue-router'
+
 const cartStore = useCartStore()
+const router = useRouter()
+
+// 跳转到结算页
+const goCheckout = () => {
+  // 检查是否有选中的商品
+  if (cartStore.selectedCount === 0) {
+    ElMessage.warning('请先选择要结算的商品')
+    return
+  }
+  
+  // 构造订单数据
+  const orderData = {
+    goods: cartStore.cartList.filter(item => item.selected).map(item => ({
+      skuId: item.skuId,
+      count: item.count
+    }))
+  }
+  
+  // 跳转到结算页，传递订单数据
+  router.push({
+    path: '/checkout',
+    query: {
+      orderData: JSON.stringify(orderData)
+    }
+  })
+}
+
 // 单选回调
 const singleChecked = (i,selected) => {
   console.log(i,selected)
-  //store cartList数组 无法知道要修改谁的选中状态
-  // 除了selected补充一个用来筛选的参数 skuId
+  //store cartList 数组 无法知道要修改谁的选中状态
+  // 除了 selected 补充一个用来筛选的参数 skuId
   cartStore.singleChecked(i.skuId,selected)
 }
 
 const allCheck = (selected) =>{
   cartStore.allCheck(selected)
-
 }
 
 </script>
@@ -89,7 +117,7 @@ const allCheck = (selected) =>{
           <span class="red">¥ {{ cartStore.selectedTotalPrice.toFixed(2) }} </span>
         </div>
         <div class="total">
-          <el-button size="large" type="primary" >下单结算</el-button>
+          <el-button size="large" type="primary" @click="goCheckout">下单结算</el-button>
         </div>
       </div>
     </div>
