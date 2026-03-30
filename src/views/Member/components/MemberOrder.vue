@@ -14,6 +14,7 @@ const tabTypes = [
 ]
 // 订单列表
 const orderList = ref([])
+const total = ref(0)
 const params = ref({
   orderState:0,
   page:1,
@@ -22,8 +23,8 @@ const params = ref({
 const getOrderList = async () => {
   const res = await getUserOrder(params.value)
   orderList.value = res.result.items
-  console.log("订单列表数据")
-  console.log(res.result)
+  total.value = res.result.counts
+  
 }
 
 onMounted(() => {
@@ -33,6 +34,15 @@ onMounted(() => {
 const tabChange =(type)=>{
   console.log(type)
   params.value.orderState = type
+  getOrderList()
+
+
+}
+
+//页码切换
+const pageChange = (page) => {
+  console.log(page)
+  params.value.page = page
   getOrderList()
 }
 
@@ -118,12 +128,22 @@ const tabChange =(type)=>{
             </div>
           </div>
           <!-- 分页 -->
+<!-- :current-page="params.page" 实现了双向绑定：
+向内传递：把外部的 params.page 值传给分页器组件
+向外响应：当 params.page 变化时，分页器 UI 自动更新 -->
           <div class="pagination-container">
-            <el-pagination background layout="prev, pager, next" />
+            <el-pagination @current-change="pageChange" 
+            :total="total" 
+            :page-size="params.pageSize"  
+            :current-page="params.page"  
+            background 
+            layout="prev, pager, next" />
+
+
           </div>
         </div>
       </div>
-
+ 
     </el-tabs>
   </div>
 
