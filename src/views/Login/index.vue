@@ -70,7 +70,7 @@ const doLogin = () => {
     <header class="login-header">
       <div class="container m-top-20">
         <h1 class="logo">
-          <RouterLink to="/">小兔鲜</RouterLink>
+          <RouterLink to="/">EcoMart</RouterLink>
         </h1>
         <RouterLink class="entry" to="/">
           进入网站首页
@@ -118,7 +118,7 @@ const doLogin = () => {
           <a href="javascript:;">搜索推荐</a>
           <a href="javascript:;">友情链接</a>
         </p>
-        <p>CopyRight &copy; 小兔鲜儿</p>
+        <p>CopyRight &copy; EcoMart</p>
       </div>
     </footer>
   </div>
