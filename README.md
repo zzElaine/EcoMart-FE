@@ -43,45 +43,6 @@
 
 ---
 
-## 📁 项目结构
-
-```
-eco-mart/
-├── public/
-├── src/
-│   ├── api/              # API 接口模块
-│   ├── assets/           # 静态资源（图片、字体等）
-│   ├── components/       # 全局通用组件
-│   │   ├── ImageView/    # 图片预览组件
-│   │   ├── XtxSku/       # SKU 规格组件
-│   │   └── ...
-│   ├── directives/       # 自定义指令（图片懒加载）
-│   ├── router/           # 路由配置
-│   ├── stores/           # Pinia 状态管理
-│   ├── styles/           # 全局样式
-│   ├── utils/            # 工具函数（请求封装等）
-│   ├── views/            # 页面视图
-│   │   ├── Layout/       # 布局组件（导航、页脚）
-│   │   ├── Home/         # 首页
-│   │   ├── Category/     # 分类页
-│   │   ├── Detail/       # 商品详情
-│   │   ├── CartList/     # 购物车
-│   │   ├── Checkout/     # 订单结算
-│   │   ├── Pay/          # 支付页
-│   │   ├── Member/       # 会员中心
-│   │   └── Login/        # 登录页
-│   ├── App.vue
-│   └── main.js
-├── .env.development      # 开发环境变量
-├── .env.production       # 生产环境变量
-├── index.html
-├── package.json
-├── vite.config.js
-└── README.md
-```
-
----
-
 ## 🚀 快速开始
 
 ### 环境要求
