@@ -160,22 +160,6 @@ VITE_ALIPAY_REDIRECT_URL=http://localhost:5173/paycallback
 
 ---
 
-## 🎯 待优化项 / 未来计划
-
-- [ ] 接入 PWA，支持离线访问
-- [ ] 添加单元测试（Vitest）
-- [ ] 虚拟滚动优化长列表
-- [ ] 骨架屏加载效果
-- [ ] 接入 AI 商品推荐接口
-- [ ] 支持暗黑模式
-
----
-
-## 📄 License
-
-MIT © [your-name]
-
----
 
 ## 🙏 致谢
 
